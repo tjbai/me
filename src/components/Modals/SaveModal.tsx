@@ -14,17 +14,17 @@ import { db } from "../../firestore/clientApp";
 import { usePostContext } from "../CreatePage/CreatePage";
 import { useModal } from "../ModalProvider/ModalProvider";
 
-const PublishModal = () => {
-  const { publishConfirmOpen, setPublishConfirmOpen } = useModal();
+const SaveModal = () => {
+  const { saveConfirmOpen, setSaveConfirmOpen } = useModal();
   const { title, body } = usePostContext();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const closeModal = () => setPublishConfirmOpen(false);
+  const closeModal = () => setSaveConfirmOpen(false);
 
   const handlePublish = () => {
     setLoading(true);
-    const postListRef = ref(db, "published_posts");
+    const postListRef = ref(db, "drafts");
     const newPostRef = push(postListRef);
     set(newPostRef, {
       title,
@@ -35,7 +35,7 @@ const PublishModal = () => {
         console.log("success!");
       })
       .catch((err) => {
-        console.log("error publishing: ", err);
+        console.log("error saving draft: ", err);
       })
       .finally(() => {
         setLoading(false);
@@ -45,11 +45,11 @@ const PublishModal = () => {
   };
 
   return (
-    <Modal isOpen={publishConfirmOpen} onClose={closeModal}>
+    <Modal isOpen={saveConfirmOpen} onClose={closeModal}>
       <ModalOverlay />
       <ModalContent>
         <ModalCloseButton />
-        <ModalBody textStyle="t2">Confirm publish?</ModalBody>
+        <ModalBody textStyle="t2">Confirm save?</ModalBody>
 
         <ModalFooter>
           <Button
@@ -57,7 +57,7 @@ const PublishModal = () => {
             onClick={handlePublish}
             isLoading={loading}
           >
-            Publish
+            Save
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -65,4 +65,4 @@ const PublishModal = () => {
   );
 };
 
-export default PublishModal;
+export default SaveModal;

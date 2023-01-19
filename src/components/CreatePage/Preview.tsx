@@ -19,7 +19,15 @@ const previewTheme = {
   },
 };
 
-const Preview = ({ date }: { date?: string }) => {
+const Preview = ({
+  givenTitle,
+  givenBody,
+  givenDate,
+}: {
+  givenTitle?: string;
+  givenBody?: string;
+  givenDate?: string;
+}) => {
   const { body, title } = usePostContext();
 
   return (
@@ -32,17 +40,17 @@ const Preview = ({ date }: { date?: string }) => {
           borderBottom="2px solid"
           borderColor="grey"
         >
-          <Text textStyle="t1">{title}</Text>
+          <Text textStyle="t1">{givenTitle ? givenTitle : title}</Text>
 
           <Flex>
             <Text mr={2}>By TJ Bai, </Text>
-            {date ? <Text>date</Text> : <Text>{prettifyDate(new Date())}</Text>}
+            <Text>{givenDate ? givenDate : prettifyDate(new Date())}</Text>
           </Flex>
         </Flex>
 
         <ReactMarkdown
           components={ChakraUIRenderer(previewTheme)}
-          children={body}
+          children={givenBody ? givenBody : body}
           skipHtml
         />
       </Flex>

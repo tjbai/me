@@ -5,6 +5,7 @@ import "@fontsource/fira-sans";
 const theme = extendTheme({
   colors: {
     bg: "#e8e8e8",
+    midbg: "#b0aeae",
     darkbg: "#161616",
   },
   fonts: {
@@ -12,7 +13,7 @@ const theme = extendTheme({
   },
   textStyles: {
     t1: {
-      fontSize: "30px",
+      fontSize: "27.5px",
       fontWeight: "bold",
     },
     t2: {

@@ -4,7 +4,8 @@ const prettifyDate = (today: Date) => {
   const yyyy = today.getFullYear();
   const hh = String(today.getHours()).padStart(2, "0");
   const mins = String(today.getMinutes()).padStart(2, "0");
-  return mm + "/" + dd + "/" + yyyy + " " + hh + ":" + mins;
+  const secs = String(today.getSeconds()).padStart(2, "0");
+  return mm + "/" + dd + "/" + yyyy + " " + hh + ":" + mins + ":" + secs;
 };
 
 export { prettifyDate };

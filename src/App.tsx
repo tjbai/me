@@ -15,6 +15,7 @@ import HomePage from "./components/HomePage";
 import ModalProvider from "./components/ModalProvider";
 import Root from "./components/Root";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AuthProvider from "./components/AuthProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,9 +37,11 @@ const queryClient = new QueryClient({
 export const App = () => (
   <ChakraProvider theme={theme}>
     <QueryClientProvider client={queryClient}>
-      <ModalProvider>
-        <RouterProvider router={router} />
-      </ModalProvider>
+      <AuthProvider>
+        <ModalProvider>
+          <RouterProvider router={router} />
+        </ModalProvider>
+      </AuthProvider>
     </QueryClientProvider>
   </ChakraProvider>
 );

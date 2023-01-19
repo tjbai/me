@@ -1,9 +1,9 @@
 import { Flex } from "@chakra-ui/react";
 import { createContext, useContext, useState } from "react";
 import PublishModal from "../Modals/PublishModal";
+import SaveModal from "../Modals/SaveModal";
 import Editor from "./Editor";
 import Preview from "./Preview";
-import Sidebar from "./Sidebar";
 
 interface PostContextInterface {
   title: string;
@@ -20,11 +20,12 @@ const CreatePage = () => {
 
   return (
     <PostContext.Provider value={{ title, setTitle, body, setBody }}>
-      <Flex direction="row" minH="100vh">
+      <Flex direction="row" minH="100vh" flex={1}>
         <PublishModal />
+        <SaveModal />
         <Editor />
         <Preview />
-        <Sidebar />
+        {/* <Sidebar /> */}
       </Flex>
     </PostContext.Provider>
   );
