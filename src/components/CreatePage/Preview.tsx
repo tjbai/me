@@ -74,7 +74,7 @@ const Preview = ({
         >
           <Text textStyle="t1">{post ? post.title : title}</Text>
 
-          <Flex fontSize={{ base: "15px", md: "17px" }}>
+          <Flex fontSize="15px">
             <Text mr={2}>By TJ Bai, </Text>
             <Text>
               {post
