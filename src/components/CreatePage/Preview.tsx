@@ -1,19 +1,11 @@
-import { Flex, keyframes, Text } from "@chakra-ui/react";
+import { Flex, Text } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import { spinAnimation } from "../../animations/textAnimations";
 import { prettifyDate } from "../../constants/utils";
+import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import { usePostContext } from "./CreatePage";
-
-const animationKeyframes = keyframes`
-  0% { transform: rotate(0); }
-  25% { transform: rotate(90deg); }
-  50% { transform: rotate(180deg); }
-  75% { transform: rotate(270deg); }
-  100% { transform: rotate(360deg); }
-`;
-
-const animation = `${animationKeyframes} 5s ease-in-out infinite`;
 
 // Add display macros here
 const previewTheme = {
@@ -31,7 +23,7 @@ const previewTheme = {
       return (
         <Flex
           as={motion.div}
-          animation={animation}
+          animation={spinAnimation}
           padding="2"
           w="fit-content"
           fontSize={size}
@@ -52,15 +44,14 @@ const previewTheme = {
 };
 
 const Preview = ({
-  givenTitle,
-  givenBody,
-  givenDate,
+  post,
+  niceReader = false,
 }: {
-  givenTitle?: string;
-  givenBody?: string;
-  givenDate?: string;
+  post?: PostType;
+  niceReader?: boolean;
 }) => {
   const { body, title } = usePostContext();
+  const { menuOpen } = useHome();
 
   return (
     <Flex
@@ -70,8 +61,10 @@ const Preview = ({
       bg="bg"
       maxH="100vh"
       overflow="scroll"
+      justify="flex-start"
+      display={{ base: menuOpen ? "none" : "flex", mobile: "flex" }}
     >
-      <Flex direction="column" maxW="700px" height="100%">
+      <Flex direction="column" maxW="800px" height="100%">
         <Flex
           direction="column"
           mb={5}
@@ -79,17 +72,21 @@ const Preview = ({
           borderBottom="2px solid"
           borderColor="grey"
         >
-          <Text textStyle="t1">{givenTitle ? givenTitle : title}</Text>
+          <Text textStyle="t1">{post ? post.title : title}</Text>
 
           <Flex fontSize={{ base: "15px", md: "17px" }}>
             <Text mr={2}>By TJ Bai, </Text>
-            <Text>{givenDate ? givenDate : prettifyDate(new Date())}</Text>
+            <Text>
+              {post
+                ? prettifyDate(new Date(post.createdDate))
+                : prettifyDate(new Date())}
+            </Text>
           </Flex>
         </Flex>
 
         <ReactMarkdown
           components={ChakraUIRenderer(previewTheme)}
-          children={givenBody ? givenBody : body}
+          children={post ? post.body : body}
           skipHtml
         />
       </Flex>

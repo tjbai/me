@@ -15,12 +15,16 @@ import HomePage from "./components/HomePage";
 import ModalProvider from "./components/ModalProvider";
 import Root from "./components/Root";
 import HomeProvider from "./components/HomeProvider";
+import SubscribePage from "./components/SubscribePage";
+import IndividualPostPage from "./components/IndividualPostPage";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Root />}>
       <Route index element={<HomePage />} />
       <Route path="create" element={<CreatePage />} />
+      <Route path=":postID" element={<IndividualPostPage />} />
+      <Route path="subscribe" element={<SubscribePage />} />
     </Route>
   )
 );

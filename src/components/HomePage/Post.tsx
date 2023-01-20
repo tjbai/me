@@ -6,7 +6,8 @@ import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import { useModal } from "../ModalProvider/ModalProvider";
 
 const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
-  const { setSelectedPost, selectedPost, verboseDates } = useHome();
+  const { setSelectedPost, selectedPost, verboseDates, setMenuOpen } =
+    useHome();
   const { loggedIn } = useAuth();
   const { setTauntOpen } = useModal();
 
@@ -14,9 +15,12 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
     if (!loggedIn && isDraft) {
       setTauntOpen(true);
     } else if (selectedPost && selectedPost.key === post.key) {
+      console.log("resetting");
       setSelectedPost(null);
+      setMenuOpen(false);
     } else {
       setSelectedPost(post);
+      setMenuOpen(false);
     }
   };
 
@@ -40,7 +44,7 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
           overflow="hidden"
           whiteSpace="nowrap"
         >
-          {post.title}
+          {selectedPost?.key === post.key ? "*" + post.title + "*" : post.title}
         </Box>
         <Text
           fontSize={{ base: "0px", md: "10px", lg: "15px" }}

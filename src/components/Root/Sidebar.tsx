@@ -1,15 +1,16 @@
-import { Icon, VStack, Link } from "@chakra-ui/react";
-import { FiSend } from "react-icons/fi";
-import { RiSave3Fill } from "react-icons/ri";
+import { Flex, VStack } from "@chakra-ui/react";
+import { AiOutlineMenu } from "react-icons/ai";
 import { BiTime } from "react-icons/bi";
+import { FaBookmark, FaEye } from "react-icons/fa";
+import { FiSend, FiTrash2 } from "react-icons/fi";
 import { ImHome } from "react-icons/im";
-import { RiEditBoxLine } from "react-icons/ri";
-import { FiTrash2 } from "react-icons/fi";
 import { MdAddBox } from "react-icons/md";
-import { Link as RRLink, useLocation, useNavigate } from "react-router-dom";
-import { useModal } from "../ModalProvider/ModalProvider";
+import { RiEditBoxLine, RiSave3Fill } from "react-icons/ri";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthProvider/AuthProvider";
 import { useHome } from "../HomeProvider/HomeProvider";
+import { useModal } from "../ModalProvider/ModalProvider";
+import Hicon from "./Hicon";
 
 const Sidebar = () => {
   const {
@@ -19,8 +20,14 @@ const Sidebar = () => {
     setDeleteOpen,
   } = useModal();
   const { loggedIn } = useAuth();
-  const { selectedPost, setSelectedPost, setVerboseDates, verboseDates } =
-    useHome();
+  const {
+    selectedPost,
+    setSelectedPost,
+    setVerboseDates,
+    verboseDates,
+    menuOpen,
+    setMenuOpen,
+  } = useHome();
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,65 +46,61 @@ const Sidebar = () => {
   if (location.pathname === "/create") {
     buttons = (
       <>
-        <Icon
-          as={FiSend}
-          _hover={{ cursor: "pointer" }}
-          onClick={() => setPublishConfirmOpen(true)}
-        />
-        <Icon
-          as={RiSave3Fill}
-          _hover={{ cursor: "pointer" }}
-          onClick={() => setSaveConfirmOpen(true)}
-        />
-        <Link as={RRLink} to="/">
-          <Icon as={ImHome} />
-        </Link>
+        <Hicon as={FiSend} onClick={() => setPublishConfirmOpen(true)} />
+        <Hicon as={RiSave3Fill} onClick={() => setSaveConfirmOpen(true)} />
+        <Hicon as={ImHome} onClick={() => navigate("/")} />
       </>
     );
   } else if (location.pathname === "/") {
     buttons = (
       <>
-        <Icon
-          as={MdAddBox}
-          _hover={{ cursor: "pointer" }}
-          onClick={() => handleNavToCreate(true)}
-        />
-
-        {/* Edit draft  */}
-        {selectedPost?.state === "draft" ? (
-          <>
-            <Icon
-              as={RiEditBoxLine}
-              _hover={{ cursor: "pointer" }}
-              onClick={() => handleNavToCreate()}
-            />
-
-            <Icon
-              as={FiTrash2}
-              _hover={{ cursor: "pointer" }}
-              onClick={() => setDeleteOpen(true)}
-            />
-          </>
+        {loggedIn ? (
+          <Hicon as={MdAddBox} onClick={() => handleNavToCreate(true)} />
         ) : (
           <></>
         )}
 
-        <Icon
-          as={BiTime}
-          justifySelf="flex-end"
-          onClick={() => setVerboseDates(!verboseDates)}
-          _hover={{ cursor: "pointer" }}
-        />
+        {selectedPost?.state === "draft" ? (
+          <>
+            <Hicon as={RiEditBoxLine} onClick={() => handleNavToCreate()} />
+            <Hicon as={FiTrash2} onClick={() => setDeleteOpen(true)} />
+          </>
+        ) : (
+          <>
+            <Hicon
+              as={FaEye}
+              onClick={() => {
+                setMenuOpen(false);
+                navigate(`${selectedPost?.key}`);
+              }}
+              isDisabled={selectedPost?.state !== "published"}
+            />
+          </>
+        )}
+
+        <Hicon as={BiTime} onClick={() => setVerboseDates(!verboseDates)} />
+        <Hicon as={FaBookmark} onClick={() => navigate("/subscribe")} />
+
+        <Flex display={{ base: "flex", mobile: "none" }}>
+          <Hicon as={AiOutlineMenu} onClick={() => setMenuOpen(!menuOpen)} />
+        </Flex>
       </>
+    );
+  } else {
+    buttons = (
+      <Flex mt="14px">
+        <Hicon as={ImHome} onClick={() => navigate("/")} />
+      </Flex>
     );
   }
 
   return (
     <VStack
       minH="100vh"
+      minW="50px"
       width="50px"
       bg="darkbg"
-      color="bg"
+      color="white"
       fontSize="30px"
       direction="column"
       align="center"

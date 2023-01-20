@@ -1,9 +1,8 @@
 import { Flex } from "@chakra-ui/react";
 import { ref } from "firebase/database";
-import { useEffect } from "react";
 import { useListVals } from "react-firebase-hooks/database";
 import { db } from "../../firestore/clientApp";
-import { PostType } from "../HomeProvider/HomeProvider";
+import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import DeleteModal from "../Modals/DeleteModal";
 import TauntModal from "../Modals/TauntModal";
 import Drafts from "./Drafts";
@@ -12,6 +11,8 @@ import PublishedPosts from "./PublishedPosts";
 import Reader from "./Reader";
 
 const HomePage = () => {
+  const { menuOpen } = useHome();
+
   const [publishedSnapshots, publishedLoading, publishedError] =
     useListVals<PostType>(ref(db, "published_posts"), {
       keyField: "key",
@@ -24,10 +25,6 @@ const HomePage = () => {
     }
   );
 
-  useEffect(() => {
-    console.log(draftSnapshots);
-  }, [draftSnapshots]);
-
   return (
     <>
       <TauntModal />
@@ -38,10 +35,10 @@ const HomePage = () => {
           bg="white"
           direction="column"
           flex={1}
-          w="40%"
-          maxW="500px"
+          maxW={{ base: "100%", mobile: "40%" }}
           position="sticky"
           top="0px"
+          display={{ base: menuOpen ? "flex" : "none", mobile: "flex" }}
         >
           <Login />
           <PublishedPosts

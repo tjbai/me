@@ -1,27 +1,27 @@
 import { Flex, Icon } from "@chakra-ui/react";
-import Preview from "../CreatePage/Preview";
 import { FiBookOpen } from "react-icons/fi";
+import Preview from "../CreatePage/Preview";
 import { useHome } from "../HomeProvider/HomeProvider";
-import { prettifyDate } from "../../constants/utils";
 
 const Reader = () => {
-  const { selectedPost } = useHome();
+  const { selectedPost, menuOpen } = useHome();
 
   if (!selectedPost) {
     return (
-      <Flex flex={1} bg="bg" align="center" justify="center" p={5}>
+      <Flex
+        flex={1}
+        bg="bg"
+        align="center"
+        justify="center"
+        p={5}
+        display={{ base: menuOpen ? "none" : "flex", mobile: "flex" }}
+      >
         <Icon as={FiBookOpen} fontSize="50px" color="darkbg" />
       </Flex>
     );
   }
 
-  return (
-    <Preview
-      givenBody={selectedPost.body}
-      givenTitle={selectedPost.title}
-      givenDate={prettifyDate(new Date(selectedPost.createdDate))}
-    />
-  );
+  return <Preview post={selectedPost} />;
 };
 
 export default Reader;

@@ -5,8 +5,8 @@ import Sidebar from "./Sidebar";
 const Root = () => {
   return (
     <Flex direction="row">
-      <Outlet />
       <Sidebar />
+      <Outlet />
     </Flex>
   );
 };

@@ -1,6 +1,7 @@
 import { extendTheme } from "@chakra-ui/react";
 
 const theme = extendTheme({
+  components: { Icon: { defaultProps: { focusable: true } } },
   colors: {
     bg: "#e8e8e8",
     midbg: "#b0aeae",
