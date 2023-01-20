@@ -1,10 +1,11 @@
 import { Flex, Icon } from "@chakra-ui/react";
 import Preview from "../CreatePage/Preview";
-import { useSelectedPost } from "./HomePage";
 import { FiBookOpen } from "react-icons/fi";
+import { useHome } from "../HomeProvider/HomeProvider";
+import { prettifyDate } from "../../constants/utils";
 
 const Reader = () => {
-  const { selectedPost } = useSelectedPost();
+  const { selectedPost } = useHome();
 
   if (!selectedPost) {
     return (
@@ -18,7 +19,7 @@ const Reader = () => {
     <Preview
       givenBody={selectedPost.body}
       givenTitle={selectedPost.title}
-      givenDate={selectedPost.createdDate}
+      givenDate={prettifyDate(new Date(selectedPost.createdDate))}
     />
   );
 };

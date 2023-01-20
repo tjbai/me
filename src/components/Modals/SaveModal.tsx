@@ -10,38 +10,67 @@ import {
 import { push, ref, set } from "firebase/database";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { prettifyDate } from "../../constants/utils";
 import { db } from "../../firestore/clientApp";
 import { usePostContext } from "../CreatePage/CreatePage";
+import { useHome } from "../HomeProvider/HomeProvider";
 import { useModal } from "../ModalProvider/ModalProvider";
 
 const SaveModal = () => {
   const { saveConfirmOpen, setSaveConfirmOpen } = useModal();
+  const { selectedPost, setSelectedPost } = useHome();
   const { title, body } = usePostContext();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const closeModal = () => setSaveConfirmOpen(false);
 
-  const handlePublish = () => {
+  const handleSave = () => {
     setLoading(true);
-    const postListRef = ref(db, "drafts");
-    const newPostRef = push(postListRef);
-    set(newPostRef, {
-      title,
-      body,
-      createdDate: new Date().toISOString(),
-    })
-      .then(() => {
-        console.log("success!");
+
+    if (!selectedPost) {
+      const postListRef = ref(db, "drafts");
+      const newPostRef = push(postListRef);
+      set(newPostRef, {
+        title,
+        body,
+        createdDate: new Date().toISOString(),
+        state: "draft",
       })
-      .catch((err) => {
-        console.log("error saving draft: ", err);
+        .then(() => {
+          console.log("success!");
+        })
+        .catch((err) => {
+          console.log("error saving draft: ", err);
+        })
+        .finally(() => {
+          setLoading(false);
+          closeModal();
+          navigate("/");
+        });
+    } else {
+      const postListRef = ref(db, "drafts/" + selectedPost.key);
+      set(postListRef, {
+        title,
+        body,
+        createdDate: new Date().toISOString(),
+        state: "draft",
       })
-      .finally(() => {
-        setLoading(false);
-        closeModal();
-        navigate("/");
-      });
+        .catch((err) => {
+          console.log("error resaving draft: ', err");
+        })
+        .finally(() => {
+          setLoading(false);
+          closeModal();
+          navigate("/");
+          setSelectedPost({
+            ...selectedPost,
+            title,
+            body,
+            createdDate: prettifyDate(new Date()),
+          });
+        });
+    }
   };
 
   return (
@@ -54,7 +83,7 @@ const SaveModal = () => {
         <ModalFooter>
           <Button
             colorScheme="telegram"
-            onClick={handlePublish}
+            onClick={handleSave}
             isLoading={loading}
           >
             Save

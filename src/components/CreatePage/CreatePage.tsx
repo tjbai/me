@@ -1,5 +1,6 @@
 import { Flex } from "@chakra-ui/react";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useHome } from "../HomeProvider/HomeProvider";
 import PublishModal from "../Modals/PublishModal";
 import SaveModal from "../Modals/SaveModal";
 import Editor from "./Editor";
@@ -17,6 +18,14 @@ const PostContext = createContext({} as PostContextInterface);
 const CreatePage = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
+  const { selectedPost } = useHome();
+
+  useEffect(() => {
+    if (selectedPost) {
+      setTitle(selectedPost.title);
+      setBody(selectedPost.body);
+    }
+  }, [selectedPost]);
 
   return (
     <PostContext.Provider value={{ title, setTitle, body, setBody }}>

@@ -1,6 +1,6 @@
 import { Flex } from "@chakra-ui/react";
 import { Val } from "react-firebase-hooks/database/dist/database/types";
-import { PostType } from "./HomePage";
+import { PostType } from "../HomeProvider/HomeProvider";
 import Post from "./Post";
 
 const PublishedPosts = ({
@@ -22,7 +22,14 @@ const PublishedPosts = ({
 
   return (
     <Flex direction="column" justify="flex-start">
-      <Flex width="100%" textStyle="t1" px={3} bg="darkbg" color="bg">
+      <Flex
+        width="100%"
+        textStyle={{ base: "b1", lg: "t2" }}
+        px={3}
+        bg="darkbg"
+        color="bg"
+        py={1}
+      >
         Published Posts
       </Flex>
       <Flex direction="column-reverse">

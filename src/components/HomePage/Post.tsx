@@ -1,10 +1,12 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import moment from "moment";
+import { prettifyDate } from "../../constants/utils";
 import { useAuth } from "../AuthProvider/AuthProvider";
+import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import { useModal } from "../ModalProvider/ModalProvider";
-import { PostType, useSelectedPost } from "./HomePage";
 
 const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
-  const { setSelectedPost, selectedPost } = useSelectedPost();
+  const { setSelectedPost, selectedPost, verboseDates } = useHome();
   const { loggedIn } = useAuth();
   const { setTauntOpen } = useModal();
 
@@ -24,17 +26,30 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
       border="1px solid"
       borderColor="bg"
       p={3}
+      py={{ base: 1, lg: 2 }}
       transition="0.2s ease-in-out"
       bg={selectedPost?.key === post.key ? "bg" : "white"}
       _hover={{ cursor: "pointer", bg: "bg" }}
       onClick={handleSelectPost}
     >
-      <Flex direction="row" align="flex-end" justify="space-between">
-        <Text lineHeight="20px" fontSize="25px" fontWeight="bold">
+      <Flex direction="row" align="center" justify="space-between">
+        <Box
+          fontSize={{ base: "15px", lg: "20px" }}
+          fontWeight="bold"
+          textOverflow="ellipsis"
+          overflow="hidden"
+          whiteSpace="nowrap"
+        >
           {post.title}
-        </Text>
-        <Text lineHeight="20px" fontSize="20px">
-          {post.createdDate}
+        </Box>
+        <Text
+          fontSize={{ base: "0px", md: "10px", lg: "15px" }}
+          whiteSpace="nowrap"
+          ml={5}
+        >
+          {verboseDates
+            ? prettifyDate(new Date(post.createdDate))
+            : moment(new Date(post.createdDate)).fromNow()}
         </Text>
       </Flex>
     </Flex>

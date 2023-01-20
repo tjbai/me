@@ -1,5 +1,4 @@
 import { Flex, Input, Textarea } from "@chakra-ui/react";
-import { title } from "process";
 import { ChangeEvent } from "react";
 import { usePostContext } from "./CreatePage";
 
@@ -11,13 +10,20 @@ const Editor = () => {
     const val = e.target.value;
     if (val.slice(-2) === "$b") {
       setBody(val.substring(0, val.length - 2) + "<br></br>");
+    } else if (val.slice(-2) === "$p") {
+      setBody(val.substring(0, val.length - 2) + "<br></br>\n<br></br>");
+    } else if (val.slice(-2) === "$8") {
+      setBody(
+        val.substring(0, val.length - 2) +
+          "<br></br>\n<br></br>\n<br></br>\n<br></br>\n"
+      );
     } else {
       setBody(val);
     }
   };
 
   return (
-    <Flex flex={1} direction="column">
+    <Flex flex={1} direction="column" maxW="40%">
       <Input
         autoFocus
         focusBorderColor="grey"
@@ -29,6 +35,7 @@ const Editor = () => {
       />
       <Textarea
         focusBorderColor="grey"
+        pb="100px"
         value={body}
         borderRadius="0px"
         onChange={handleBodyChange}

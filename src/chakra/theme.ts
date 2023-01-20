@@ -1,6 +1,4 @@
 import { extendTheme } from "@chakra-ui/react";
-import "@fontsource/azeret-mono";
-import "@fontsource/fira-sans";
 
 const theme = extendTheme({
   colors: {

@@ -1,21 +1,20 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./chakra/theme";
-
-// Fonts
 import "@fontsource/azeret-mono/400.css";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
 } from "react-router-dom";
+import AuthProvider from "./components/AuthProvider";
 import CreatePage from "./components/CreatePage";
 import HomePage from "./components/HomePage";
 import ModalProvider from "./components/ModalProvider";
 import Root from "./components/Root";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AuthProvider from "./components/AuthProvider";
+import HomeProvider from "./components/HomeProvider";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,7 +38,9 @@ export const App = () => (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <ModalProvider>
-          <RouterProvider router={router} />
+          <HomeProvider>
+            <RouterProvider router={router} />
+          </HomeProvider>
         </ModalProvider>
       </AuthProvider>
     </QueryClientProvider>
