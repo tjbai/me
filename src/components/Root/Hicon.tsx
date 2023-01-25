@@ -13,6 +13,8 @@ const Hicon = ({
     <Icon
       as={as}
       onClick={isDisabled ? () => {} : onClick}
+      mx={{ base: 4, md: 0 }}
+      my={{ base: 0, md: 2 }}
       color={isDisabled ? "#8c8989" : "white"}
       fontSize="25px"
       _hover={{ cursor: isDisabled ? "not-allowed" : "pointer" }}

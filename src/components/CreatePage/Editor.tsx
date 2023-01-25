@@ -1,9 +1,11 @@
 import { Flex, Input, Textarea } from "@chakra-ui/react";
 import { ChangeEvent } from "react";
+import { useHome } from "../HomeProvider/HomeProvider";
 import { usePostContext } from "./CreatePage";
 
 const Editor = () => {
   const { title, setTitle, body, setBody } = usePostContext();
+  const { menuOpen } = useHome();
 
   // Define body macros here
   const handleBodyChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -23,7 +25,12 @@ const Editor = () => {
   };
 
   return (
-    <Flex flex={1} direction="column" maxW="40%">
+    <Flex
+      flex={1}
+      direction="column"
+      maxW={{ base: "100%", md: "45%" }}
+      display={{ base: menuOpen ? "flex" : "none", md: "flex" }}
+    >
       <Input
         autoFocus
         focusBorderColor="grey"

@@ -14,7 +14,7 @@ const Reader = () => {
         align="center"
         justify="center"
         p={5}
-        display={{ base: menuOpen ? "none" : "flex", mobile: "flex" }}
+        display={{ base: menuOpen ? "none" : "flex", md: "flex" }}
       >
         <Icon as={FiBookOpen} fontSize="50px" color="darkbg" />
       </Flex>

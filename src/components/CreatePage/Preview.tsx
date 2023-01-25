@@ -70,7 +70,7 @@ const Preview = ({
       maxH="100vh"
       overflow="scroll"
       justify="flex-start"
-      display={{ base: menuOpen ? "none" : "flex", mobile: "flex" }}
+      display={{ base: menuOpen ? "none" : "flex", md: "flex" }}
     >
       <Flex direction="column" maxW="700px" height="100%">
         <Flex

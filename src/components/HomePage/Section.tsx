@@ -3,43 +3,45 @@ import { Val } from "react-firebase-hooks/database/dist/database/types";
 import { PostType } from "../HomeProvider/HomeProvider";
 import Post from "./Post";
 
-const Drafts = ({
+const Section = ({
   posts,
   error,
   loading,
+  title,
 }: {
   posts: Val<PostType, "", "">[] | undefined;
   error: Error | undefined;
   loading: boolean;
+  title: string;
 }) => {
   if (error) {
-    return <Flex flex={1}>Error fetching drafts...{error.toString()}</Flex>;
+    return <Flex flex={1}>Error fetching posts...{error.toString()}</Flex>;
   }
 
   if (loading) {
-    return <Flex flex={1}>Loading Drafts..</Flex>;
+    return <Flex flex={1}>Loading posts...</Flex>;
   }
 
   return (
-    <Flex direction="column" justify="flex-start" w="100%">
+    <Flex direction="column" justify="flex-start">
       <Flex
         width="100%"
-        fontSize={{ base: "15px", md: "12px", lg: "20px" }}
+        fontSize={{ base: "15px", lg: "20px" }}
         fontWeight="bold"
         px={3}
         bg="darkbg"
         color="bg"
         py={1}
       >
-        Drafts
+        {title}
       </Flex>
       <Flex direction="column-reverse">
         {posts?.map((post) => (
-          <Post key={post.key} post={post} isDraft />
+          <Post key={post.key} post={post} />
         ))}
       </Flex>
     </Flex>
   );
 };
 
-export default Drafts;
+export default Section;

@@ -5,7 +5,7 @@ import { useAuth } from "../AuthProvider/AuthProvider";
 import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import { useModal } from "../ModalProvider/ModalProvider";
 
-const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
+const Post = ({ post }: { post: PostType }) => {
   const { setSelectedPost, selectedPost, verboseDates, setMenuOpen } =
     useHome();
   const { loggedIn } = useAuth();
@@ -14,22 +14,22 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
   moment.updateLocale("en", {
     relativeTime: {
       s: "secs",
-      ss: "%dsec",
-      m: "1min",
-      mm: "%dmin",
+      ss: "%d secs",
+      m: "1 min",
+      mm: "%d mins",
       h: "1h",
       hh: "%dh",
       d: "1d",
       dd: "%dd",
-      M: "1mon",
-      MM: "%dmon",
+      M: "1m",
+      MM: "%dm",
       y: "1y",
       yy: "%dy",
     },
   });
 
   const handleSelectPost = () => {
-    if (!loggedIn && isDraft) {
+    if (!loggedIn && post.state === "draft") {
       setTauntOpen(true);
     } else if (selectedPost && selectedPost.key === post.key) {
       console.log("resetting");

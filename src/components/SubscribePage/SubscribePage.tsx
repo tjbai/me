@@ -23,7 +23,7 @@ const SubscribePage = () => {
   };
 
   return (
-    <Flex flex={1} bg="bg" p={5} direction="column">
+    <Flex flex={1} bg="bg" p={5} direction="column" minH="100vh">
       <VStack maxW="300px" direction="column" align="flex-start">
         <Text textStyle="t1">Whoa, you're gonna subscribe?</Text>
         <Input

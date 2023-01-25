@@ -4,7 +4,7 @@ import Sidebar from "./Sidebar";
 
 const Root = () => {
   return (
-    <Flex direction="row">
+    <Flex direction={{ base: "column", md: "row" }}>
       <Sidebar />
       <Outlet />
     </Flex>

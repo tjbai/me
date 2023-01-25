@@ -42,17 +42,23 @@ const Sidebar = () => {
     }
   };
 
-  let buttons;
+  let startButtons;
+  const spookyMenuButton = (
+    <Flex display={{ base: "flex", md: "none" }}>
+      <Hicon as={AiOutlineMenu} onClick={() => setMenuOpen(!menuOpen)} />
+    </Flex>
+  );
+
   if (location.pathname === "/create") {
-    buttons = (
+    startButtons = (
       <>
-        <Hicon as={FiSend} onClick={() => setPublishConfirmOpen(true)} />
-        <Hicon as={RiSave3Fill} onClick={() => setSaveConfirmOpen(true)} />
         <Hicon as={ImHome} onClick={() => navigate("/")} />
+        <Hicon as={RiSave3Fill} onClick={() => setSaveConfirmOpen(true)} />
+        <Hicon as={FiSend} onClick={() => setPublishConfirmOpen(true)} />
       </>
     );
   } else if (location.pathname === "/") {
-    buttons = (
+    startButtons = (
       <>
         {loggedIn ? (
           <Hicon as={MdAddBox} onClick={() => handleNavToCreate(true)} />
@@ -80,35 +86,44 @@ const Sidebar = () => {
 
         <Hicon as={BiTime} onClick={() => setVerboseDates(!verboseDates)} />
         <Hicon as={FaBookmark} onClick={() => navigate("/subscribe")} />
-
-        <Flex display={{ base: "flex", mobile: "none" }}>
-          <Hicon as={AiOutlineMenu} onClick={() => setMenuOpen(!menuOpen)} />
-        </Flex>
       </>
     );
   } else {
-    buttons = (
-      <Flex mt="14px">
+    startButtons = (
+      <Flex mt={{ base: "0px", md: "6px" }}>
         <Hicon as={ImHome} onClick={() => navigate("/")} />
       </Flex>
     );
   }
 
   return (
-    <VStack
-      minH="100vh"
-      minW="50px"
+    <Flex
+      minH={{ base: "50px", md: "100vh" }}
+      minW={{ base: "100vw", md: "50px" }}
       width="50px"
       bg="darkbg"
       color="white"
       fontSize="30px"
-      direction="column"
       align="center"
       py={3}
-      spacing={5}
+      direction={{ base: "row", md: "column" }}
     >
-      {buttons}
-    </VStack>
+      <Flex flex={1} direction={{ base: "row", md: "column" }}>
+        {startButtons}
+      </Flex>
+
+      {location.pathname === "/" || location.pathname === "/create" ? (
+        <Flex
+          flex={1}
+          direction={{ base: "row", md: "column" }}
+          justify="flex-end"
+        >
+          {spookyMenuButton}
+        </Flex>
+      ) : (
+        <></>
+      )}
+    </Flex>
   );
 };
 
