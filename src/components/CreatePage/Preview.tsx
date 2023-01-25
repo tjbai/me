@@ -72,7 +72,7 @@ const Preview = ({
       justify="flex-start"
       display={{ base: menuOpen ? "none" : "flex", mobile: "flex" }}
     >
-      <Flex direction="column" maxW="800px" height="100%">
+      <Flex direction="column" maxW="700px" height="100%">
         <Flex
           direction="column"
           mb={5}
