@@ -35,10 +35,11 @@ const HomePage = () => {
           bg="white"
           direction="column"
           flex={1}
-          maxW={{ base: "100%", mobile: "40%" }}
+          // w={{ base: "100%", mobile: "30%" }}
+          maxW={{ base: "100%", md: "30%" }}
           position="sticky"
           top="0px"
-          display={{ base: menuOpen ? "flex" : "none", mobile: "flex" }}
+          display={{ base: menuOpen ? "flex" : "none", md: "flex" }}
         >
           <Login />
           <PublishedPosts

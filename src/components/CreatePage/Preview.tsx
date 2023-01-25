@@ -16,6 +16,7 @@ const previewTheme = {
     }
 
     const cand = children[0];
+    console.log(cand);
     if (cand.substring(0, 5) === "$spin") {
       const split = cand.split("/");
       const size = split[1],
@@ -31,6 +32,13 @@ const previewTheme = {
         >
           {word}
         </Flex>
+      );
+    } else if (cand.substring(0, 2) === '$"') {
+      const text = cand.split('"')[1];
+      return (
+        <Text bg="midbg" fontStyle="italic" p={2} mb={5}>
+          "{text}"
+        </Text>
       );
     } else if (cand.substring(0, 1) === "$") {
       return (

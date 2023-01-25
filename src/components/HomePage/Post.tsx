@@ -11,6 +11,23 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
   const { loggedIn } = useAuth();
   const { setTauntOpen } = useModal();
 
+  moment.updateLocale("en", {
+    relativeTime: {
+      s: "secs",
+      ss: "%dsec",
+      m: "1min",
+      mm: "%dmin",
+      h: "1h",
+      hh: "%dh",
+      d: "1d",
+      dd: "%dd",
+      M: "1mon",
+      MM: "%dmon",
+      y: "1y",
+      yy: "%dy",
+    },
+  });
+
   const handleSelectPost = () => {
     if (!loggedIn && isDraft) {
       setTauntOpen(true);
@@ -30,7 +47,7 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
       border="1px solid"
       borderColor="bg"
       p={3}
-      py={{ base: 1, lg: 2 }}
+      py={2}
       transition="0.2s ease-in-out"
       bg={selectedPost?.key === post.key ? "bg" : "white"}
       _hover={{ cursor: "pointer", bg: "bg" }}
@@ -38,7 +55,7 @@ const Post = ({ post, isDraft }: { post: PostType; isDraft?: boolean }) => {
     >
       <Flex direction="row" align="center" justify="space-between">
         <Box
-          fontSize={{ base: "15px", lg: "20px" }}
+          fontSize={{ base: "12px", lg: "15px" }}
           fontWeight="bold"
           textOverflow="ellipsis"
           overflow="hidden"

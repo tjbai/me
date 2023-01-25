@@ -25,7 +25,7 @@ const SaveModal = () => {
 
   const closeModal = () => setSaveConfirmOpen(false);
 
-  const handleSave = () => {
+  const handleSave = (stay: boolean = false) => {
     setLoading(true);
 
     if (!selectedPost) {
@@ -62,7 +62,10 @@ const SaveModal = () => {
         .finally(() => {
           setLoading(false);
           closeModal();
-          navigate("/");
+
+          if (!stay) {
+            navigate("/");
+          }
           setSelectedPost({
             ...selectedPost,
             title,
@@ -83,7 +86,15 @@ const SaveModal = () => {
         <ModalFooter>
           <Button
             colorScheme="telegram"
-            onClick={handleSave}
+            mr={2}
+            onClick={() => handleSave(true)}
+            isLoading={loading}
+          >
+            Save and Stay
+          </Button>
+          <Button
+            colorScheme="telegram"
+            onClick={() => handleSave()}
             isLoading={loading}
           >
             Save

@@ -24,7 +24,8 @@ const PublishedPosts = ({
     <Flex direction="column" justify="flex-start">
       <Flex
         width="100%"
-        textStyle={{ base: "b1", lg: "t2" }}
+        fontSize={{ base: "15px", lg: "20px" }}
+        fontWeight="bold"
         px={3}
         bg="darkbg"
         color="bg"
