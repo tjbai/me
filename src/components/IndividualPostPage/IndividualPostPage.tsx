@@ -37,27 +37,29 @@ const IndividualPostPage = () => {
 
   if (notFound) {
     return (
-      <VStack
-        flex={1}
-        minH="100vh"
-        bg="bg"
-        align="center"
-        justify="center"
-        direction="column"
-      >
-        <Text>This post doesn't exist...</Text>
-        <Text>what are you doing here?</Text>
-        <Link to="/">
-          <Button
-            colorScheme="telegram"
-            borderRadius="0px"
-            height="30px"
-            mt={5}
-          >
-            Take me home
-          </Button>
-        </Link>
-      </VStack>
+      <>
+        <VStack
+          flex={1}
+          minH="100vh"
+          bg="bg"
+          align="center"
+          justify="center"
+          direction="column"
+        >
+          <Text>This post doesn't exist...</Text>
+          <Text>what are you doing here?</Text>
+          <Link to="/">
+            <Button
+              colorScheme="telegram"
+              borderRadius="0px"
+              height="30px"
+              mt={5}
+            >
+              Take me home
+            </Button>
+          </Link>
+        </VStack>
+      </>
     );
   }
 

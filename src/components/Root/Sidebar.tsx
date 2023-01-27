@@ -1,4 +1,4 @@
-import { Flex, VStack } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { BiTime } from "react-icons/bi";
 import { FaBookmark, FaEye } from "react-icons/fa";

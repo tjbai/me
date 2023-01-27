@@ -7,7 +7,6 @@ import { prettifyDate } from "../../constants/utils";
 import { PostType, useHome } from "../HomeProvider/HomeProvider";
 import { usePostContext } from "./CreatePage";
 
-// Add display macros here
 const previewTheme = {
   p: (props: any) => {
     const { children } = props;
