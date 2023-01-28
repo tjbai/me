@@ -35,6 +35,10 @@ const IndividualPostPage = () => {
     );
   }
 
+  document
+    .querySelector('meta[name="description"]')
+    ?.setAttribute("content", post?.title!);
+
   if (notFound) {
     return (
       <>

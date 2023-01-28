@@ -16,7 +16,6 @@ const previewTheme = {
     }
 
     const cand = children[0];
-    console.log(cand);
     if (cand.substring(0, 5) === "$spin") {
       const split = cand.split("/");
       const size = split[1],
