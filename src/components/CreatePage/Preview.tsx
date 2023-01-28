@@ -1,7 +1,8 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Link, Text } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
+import Spotify from "react-spotify-embed";
 import { spinAnimation } from "../../animations/textAnimations";
 import { prettifyDate } from "../../constants/utils";
 import { PostType, useHome } from "../HomeProvider/HomeProvider";
@@ -30,6 +31,20 @@ const previewTheme = {
           m={10}
         >
           {word}
+        </Flex>
+      );
+    } else if (cand.substring(0, 2) === "$l") {
+      const split = cand.split("$");
+      return (
+        <Link isExternal href={split[3]} color="#4e9cf5">
+          {split[2]}
+        </Link>
+      );
+    } else if (cand.substring(0, 2) === "$s" && cand.slice(-2) === "$d") {
+      const split = cand.split("$");
+      return (
+        <Flex mt={5}>
+          <Spotify wide link={split[2]} />
         </Flex>
       );
     } else if (cand.substring(0, 2) === '$"') {
