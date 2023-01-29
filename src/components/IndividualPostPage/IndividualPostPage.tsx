@@ -67,7 +67,7 @@ const IndividualPostPage = () => {
     );
   }
 
-  return <Preview post={post} niceReader />;
+  return <Preview post={post} />;
 };
 
 export default IndividualPostPage;

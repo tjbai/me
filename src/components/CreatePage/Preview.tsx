@@ -64,13 +64,7 @@ const previewTheme = {
   },
 };
 
-const Preview = ({
-  post,
-  niceReader = false,
-}: {
-  post?: PostType;
-  niceReader?: boolean;
-}) => {
+const Preview = ({ post }: { post?: PostType }) => {
   const { body, title } = usePostContext();
   const { menuOpen } = useHome();
 
@@ -97,10 +91,15 @@ const Preview = ({
 
           <Flex fontSize="15px">
             <Text mr={2}>By TJ Bai, </Text>
-            <Text>
+            <Text mr={2}>
               {post
                 ? prettifyDate(new Date(post.createdDate))
                 : prettifyDate(new Date())}
+              ,
+            </Text>
+            <Text>
+              {post ? post.body.split(" ").length : body.split(" ").length}{" "}
+              words
             </Text>
           </Flex>
         </Flex>
