@@ -98,7 +98,7 @@ const Preview = ({ post }: { post?: PostType }) => {
               ,
             </Text>
             <Text>
-              {post ? post.body.split(" ").length : body.split(" ").length}{" "}
+              {post ? post.body?.split(" ").length : body?.split(" ").length}{" "}
               words
             </Text>
           </Flex>

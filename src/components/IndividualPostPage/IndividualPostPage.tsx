@@ -1,5 +1,5 @@
 import { Button, Flex, Text, VStack } from "@chakra-ui/react";
-import { get, child, ref } from "firebase/database";
+import { child, get, ref } from "firebase/database";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { db } from "../../firestore/clientApp";
@@ -34,10 +34,6 @@ const IndividualPostPage = () => {
       </Flex>
     );
   }
-
-  document
-    .querySelector('meta[name="description"]')
-    ?.setAttribute("content", post?.title!);
 
   if (notFound) {
     return (
