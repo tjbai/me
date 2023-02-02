@@ -16,6 +16,10 @@ const previewTheme = {
     }
 
     const cand = children[0];
+    if (typeof cand !== "string") {
+      return children;
+    }
+
     if (cand.substring(0, 5) === "$spin") {
       const split = cand.split("/");
       const size = split[1],
