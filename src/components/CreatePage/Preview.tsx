@@ -1,4 +1,4 @@
-import { Flex, Link, Text } from "@chakra-ui/react";
+import { Flex, Link, Text, Box } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
@@ -16,6 +16,11 @@ const previewTheme = {
     }
 
     const cand = children[0];
+    if (typeof cand !== "string" || cand.charAt(0) !== "$") {
+      return children;
+    }
+
+    // SPINNY TEXT
     if (cand.substring(0, 5) === "$spin") {
       const split = cand.split("/");
       const size = split[1],
@@ -32,31 +37,50 @@ const previewTheme = {
           {word}
         </Flex>
       );
-    } else if (cand.substring(0, 2) === "$l") {
+    }
+    // EXTERNAL LINKS
+    else if (cand.substring(0, 2) === "$l") {
       const split = cand.split("$");
       return (
         <Link isExternal href={split[3]} color="#4e9cf5">
           {split[2]}
         </Link>
       );
-    } else if (cand.substring(0, 2) === "$s" && cand.slice(-2) === "$d") {
+    }
+    // INTERNAL LINKS
+    else if (cand.substring(0, 3) === "$il") {
+      const linkTo = "#" + cand.split("$").slice(-1)[0];
+      return <a href={linkTo}>{linkTo}</a>;
+    }
+    // SPOTIFY EMBED
+    else if (cand.substring(0, 2) === "$s" && cand.slice(-2) === "$d") {
       const split = cand.split("$");
       return (
         <Flex mt={5}>
           <Spotify wide link={split[2]} />
         </Flex>
       );
-    } else if (cand.substring(0, 2) === '$"') {
+    }
+    // NEW LINE
+    else if (cand.substring(0, 3) === "$nl") {
+      const val = cand.split("$").slice(-1);
+      return <Box my={val} />;
+    }
+    // QUOTE BLOCKS
+    else if (cand.substring(0, 2) === '$"') {
       const text = cand.split('"')[1];
       return (
         <Text bg="midbg" fontStyle="italic" p={2} mb={5}>
           "{text}"
         </Text>
       );
-    } else if (cand.substring(0, 1) === "$") {
+    }
+    // BOLD TEXT
+    else if (cand.substring(0, 1) === "$") {
+      const text = cand.substring(1);
       return (
-        <Text textStyle="t2" mb={2}>
-          {children[0].substring(1)}
+        <Text textStyle="t2" mb={2} id={text}>
+          {text}
         </Text>
       );
     }
